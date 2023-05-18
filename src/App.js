@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import ExpenseItem from "./components/ExpenseItem";
+import "./App.css";
+import ExpenseForm from "./components/ExpenseForm";
+const App = () => {
+  const expenses = [];
+  const [expenseArr, setExpenseArr] = useState(expenses);
+  console.log(expenseArr);
 
-function App() {
+  const expenseData = (expenseInformation) => {
+    const data = [...expenseArr, expenseInformation];
+    setExpenseArr(data);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <ExpenseForm expenseData={expenseData} />
+
+      <div className="expenses">
+        {expenseArr.map((item) => (
+          <ExpenseItem
+            key={item.id}
+            date={item.date}
+            amount={item.amount}
+            title={item.title}
+          />
+        ))}
+      </div>
+    </>
   );
-}
+};
 
 export default App;
